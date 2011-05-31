@@ -51,6 +51,10 @@ function resetSlide(id) {
 	slide.find('input[type=radio]').attr('checked', false);
 	// Clear text boxes and textareas
 	slide.find('input[type=text], textarea').attr('value', '');
+	// Clear file upload inputs
+	slide.find('input[type=file]').parent('div.fileinput').each( function(i){
+		$(this).html( $(this).html() ); // SLightly hacky
+	});
 	
 	// Hide all divs that were originally hidden
 	slide.find('div.hide').slideUp();
