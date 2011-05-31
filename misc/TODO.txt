@@ -1,0 +1,12 @@
+TODO:
+* Finish blurbs, and wikify them.
+* Generate a text description of the bug from the selected options.
+* Get the page to display the 'Continue' button when reach the end of the questions.
+* If Linux crash, mention backtrace. If windows, request error text.
+
+RESEARCH:
+* Find-out things that are needed/wanted for bug reports, and get them included in the questions.
+* Is it possible to directly post a bug without visiting the bugzilla page?
+* Can the bugzilla form be filled-in via GET or POST?
+* Is there a standard format for stuff that's included in bug reports?
+

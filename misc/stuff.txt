@@ -1,0 +1,72 @@
+http://lists.freedesktop.org/archives/libreoffice/2011-February/thread.html#8101
+
+
+	I think we probably also need to make the questions easier to
+understand (think expert friendly, but idiot proof), of course this will
+require a lot of thought to get the taxonomy right:
+
+Radio buttons:
+	( ) can you crash LibreOffice somehow ?
+	( ) does your document not look right when it is loaded ?
+	( ) did other people have trouble reading the document
+	    you sent ?
+	( ) is there an unpleasant user interaction that makes it
+	    difficult to use ?
+	[ if several of these, please file multiple reports ]
+
+	I would also tend to hide everything else (including the submit
+button) until the data is useful - so people have a fairly linear flow.
+
+	( ) can you crash LibreOffice somehow ?
+		( ) does this happen when you load or save a certain
+		    document ?
+			+ link to making minimal documents blurb :-)
+		( ) is there a simple set of steps, and button clicks
+		    that can crash with no document loaded ?
+			+ link to how-to-get-stacktrace documentation
+		( ) is the crash intermittent and un-predictable ?
+			+ link to how-to-get-stacktrace documentation
+
+	( ) does your document not look right when it is loaded ?
+		+ link to making minimal documents blurb
+		[x] I am certain that I have the correct fonts installed
+		    on the system for this document
+			+ link to fc-list (Linux), and Mac/Win details
+			+ NB. the 'font' drop-down in LO lies - we
+			  should explain that.
+		+ ask for screenshots before / after of the problem
+
+	( ) did other people have trouble reading the document
+	    you sent ?
+		( ) Do you have the original document in OpenDocument
+		    format ?
+			No == very hard to work out what went wrong.
+			can you try to reproduce what you did, and
+			first save it in ODF, before exporting ...
+			Yes == link to producing minimal document
+		        description ;-)
+
+	( ) is there an unpleasant user interaction that makes it
+	    difficult to use ?
+		+ no idea where to go here I guess.	
+
+	I suspect we could avoid asking which component is involved, and just
+look at up-loaded test document / file extensions in many cases to
+auto-select the component.
+
+	I liked your proxies for severity: "causes loss of content" etc. -
+asking people the severity of their bug is almost never a good idea :-)
+[ which is why I like the plan to hide the actual bug form from them ].
+
+	Anyhow - this is a really sexy initiative :-) Hopefully we can get some
+more artwork support from the design team, to actually make it fun /
+pretty to file really good bugs.
+
+	What can we do to make it easier to file ? eg. can we wrap the account
+creation flow in some pleasant way ? Perhaps that should be step #1 -
+without an E-mail address and a real account, it is fairly pointless
+filing a bug IMHO.
+
+	Thanks !
+
+		Michael.

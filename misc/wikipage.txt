@@ -1,0 +1,21 @@
+===Make the file as small as possible===
+In order to be most helpful, please make documents as small as possible,
+while still causing the bug. The simplest way of doing this is known as
+''binary chopping''.
+
+# First, save a backup copy of the document.
+# Open the document up in its native application:
+#* For .doc files, this will be Mcrosoft Word.
+#* For ODF files (.odt, .ods, etc) this will be LibreOffice.
+# Then, repeatedly:
+## Delete the top half of the document.
+## Save it as a new document.
+## Open the document in LibreOffice.
+## Is the problem still there?
+##* If so, go back to the start of step 3.
+##* Otherwise, go back to the previous copy (or backup) and try step 3
+again with the second half of the document.
+# Once you have reduced the document down to the part that causes problems,
+(making sure to remove any confidential information), attach it to the
+bug report.
+

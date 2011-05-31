@@ -1,0 +1,70 @@
+14:36 <AtkinsSJ> Hi, I'm new to this, but I'd like to help out with the bug-filing form. Are you the right person to speak to for that?
+14:40 <mmeeks> yes ! :-)
+14:40 <mmeeks> cool ...
+14:40 <mmeeks> that would be wonderful.
+14:41 <mmeeks> did you get the previous version ?
+14:41 <mmeeks> I forget who did that, but he dropped it in the end,
+14:41 <mmeeks> did you see the comments on the dev list ?
+14:41 <AtkinsSJ> Oh, good. :D Yes, I've had a go at using the format you mentioned on the mailing list.
+14:42 <mmeeks> ooooh - nice :-)
+14:42 <mmeeks> do you have something I can play with ?
+14:42 <mmeeks> .
+14:42 <AtkinsSJ> Current version is here: http://atkinslg.dyndns.org:4080/stuff/submitbug.html 
+14:42 <mmeeks> cool.
+14:42  * mmeeks plays
+14:43 <mmeeks> this looks great :-)
+14:43 <AtkinsSJ> Thanks :)
+14:43 <mmeeks> so - I guess we need to write up the blurb in each case,
+14:44 <mmeeks> I guess:
+14:44 <mmeeks> Is there a simple set of steps that cause the crash?
+14:44 <mmeeks> I guess we should have a "do you need to load a document to execute those steps ?"
+14:44 <mmeeks> .
+14:44 <mmeeks> so;
+14:44 <AtkinsSJ> Ah, ok
+14:45 <mmeeks> the 'blurb about making the document small' should be
+14:45 <mmeeks> basically explaining to people how to binary chop their document.
+14:45 <mmeeks> .
+14:45 <AtkinsSJ> Yeah, I'll have to look that up as I'm unfamiliar with it
+14:45 <mmeeks> something like: "You need to load the document in its native application: LibreOffice for ODF, Microsoft Office for .doc etc."
+14:45 <mmeeks> "then remove the top half of the document, save, and re-test inside LibreOffice"
+14:45 <mmeeks> "if the bug goes away - then the problem was in the top half; otherwise it was in the bottom :-)
+14:46 <mmeeks> "repeat this process, until you have the smallest document that still reproduces the error"
+14:46 <AtkinsSJ> Ah, I saw the word 'binary' and assumed it meant fiddling with the file itself. That sounds fairly simple
+14:46 <mmeeks> "NB. please ensure that you don't destroy the original".
+14:46 <mmeeks> "when you have the smallest test document you can make, please remove confidential data from it, and attach it ..." etc. :-)
+14:46 <mmeeks> .
+14:47 <mmeeks> you realise - there is -so- much cool stuff we can do in this ? :-)
+14:47 <mmeeks> .
+14:47 <mmeeks> eg. detecting windows vs. Linux - and recommending using 'gdb' for getting stacktraces or not ?
+14:47 <mmeeks> but this is a really great start [thank you !]
+14:47 <mmeeks> so;
+14:48 <mmeeks> I wonder;
+14:48 <mmeeks> we should perhaps have web links to each of these write-ups;
+14:48 <mmeeks> in some bug-filing page in the wiki.
+14:48 <AtkinsSJ> Yeah, sounds like a good idea
+14:48 <mmeeks> since they will be duplicated several times, and its much easier to do that in the wiki I guess.
+14:48 <mmeeks> anyhow - this is awesome,
+14:49 <AtkinsSJ> I saw the Linux stacktrace stuff is on the wiki
+14:49 <mmeeks> you have a wiki account ?
+14:49 <AtkinsSJ> Not yet
+14:49 <mmeeks> http://wiki.documentfoundation.org/ 
+14:49 <mmeeks> it should be open access.
+14:49 <mmeeks> so - this is great; I would create a page there,
+14:49 <mmeeks> and then it is just a matter of tying the information together,
+14:49 <mmeeks> and scraping it up from here and there on how to file good bugs.
+14:49 <mmeeks> we should get 'sophie' to review it too.
+14:50 <mmeeks> any chance you could get the wiki page "Filing Bugs" created, and some sub-sections linked in (nice to have a nucleus for people to help out with I think),
+14:50 <mmeeks> and then mail to me / Sophie Gautier <gautier.sophie@gmail.com> - and CC the development list asking for comments ?
+14:50 <AtkinsSJ> Yeah, I don't mind doing that.
+14:50  * mmeeks suspects we'll get a lot more good advice on categorisation that way ...
+14:50 <mmeeks> and perhaps some new wiki sections etc. :-)
+14:50 <mmeeks> .
+14:51 <mmeeks> be nice to import the platform detection code we have on the download page I guess;
+14:51 <mmeeks> AFAIR debugging / getting stack traces on Windows is basically a total failure ;-)
+14:51 <AtkinsSJ> Yeah, I can imagine
+14:51 <mmeeks> nice work !
+14:51 <mmeeks> anyhow :-)
+14:51 <AtkinsSJ> Thanks for your help. :)
+14:51 <mmeeks> thank you !
+14:52  * mmeeks gets back to speeding up startup ... ;-)
+

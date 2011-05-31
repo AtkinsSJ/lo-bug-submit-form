@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Bug Filing Form</title>
+        <style type="text/css">
+            .hide { display: none; }
+            
+            div.noscript { background-color: #ffdddd; }
+            
+            .question {
+                background-color: #ffff77;
+                padding-left: 10px;
+            }
+            
+            textarea {
+                width: 400px;
+            }
+            
+            ul {
+                list-style-type: none;
+            }
+            
+            div#main_body {
+                float: left;
+                width: 58%;
+            }
+            
+            div#main_body h3 {
+                background-color: #9999ff;
+            }
+            
+            div#sidebar {
+                position: fixed;
+                top: 0px;
+                right: 0px;
+                float: right;
+                width: 41%;
+                height: 100%;
+                /*padding: 4px;*/
+                overflow: auto;
+            }
+            
+            div.sidebar_content {
+                display: none;
+                padding: 4px;
+                background-color: #88ff88;
+            }
+            
+            :target {
+                background-color: #ffff77;
+            }
+        </style>
+        
+        <script type="text/javascript">
+          /* <![CDATA[ */
+            /**
+             * Display different questions, based on the problem type, given as an integer.
+             * 0 = LibreOffice crashes
+             * 1 = Document looks strange on load.
+             * 2 = Document unreadable by someone else
+             * 3 = The UI is confusing in some way
+             * 4 = Problem with website
+             */
+            function problemType( typeId )
+            {
+                switch (typeId)
+                {
+                case 0: // Libreoffice crashes
+                    document.getElementById("crash").style.display = "block";
+                    document.getElementById("docload").style.display = "none";
+                    document.getElementById("unreadable").style.display = "none";
+                    document.getElementById("ui").style.display = "none";
+                    document.getElementById("www").style.display = "none";
+                    location.hash = "crash_a";
+                    displaySubmitDiv(false);
+                    break;
+                case 1: // The document looks strange on load
+                    document.getElementById("crash").style.display = "none";
+                    document.getElementById("docload").style.display = "block";
+                    document.getElementById("unreadable").style.display = "none";
+                    document.getElementById("ui").style.display = "none";
+                    document.getElementById("www").style.display = "none";
+                    location.hash = "docload_a";
+                    displaySubmitDiv(false);
+                    break;
+                case 2: // Document unreadable by someone else
+                    document.getElementById("crash").style.display = "none";
+                    document.getElementById("docload").style.display = "none";
+                    document.getElementById("unreadable").style.display = "block";
+                    document.getElementById("ui").style.display = "none";
+                    document.getElementById("www").style.display = "none";
+                    location.hash = "unreadable_a";
+                    displaySubmitDiv(false);
+                    break;
+                case 3: // UI is confusing or difficult to use
+                    document.getElementById("crash").style.display = "none";
+                    document.getElementById("docload").style.display = "none";
+                    document.getElementById("unreadable").style.display = "none";
+                    document.getElementById("ui").style.display = "block";
+                    document.getElementById("www").style.display = "none";
+                    location.hash = "ui_a";
+                    displaySubmitDiv(false);
+                    break;
+                case 4: // Problem with website
+                    document.getElementById("crash").style.display = "none";
+                    document.getElementById("docload").style.display = "none";
+                    document.getElementById("unreadable").style.display = "none";
+                    document.getElementById("ui").style.display = "none";
+                    document.getElementById("www").style.display = "block";
+                    location.hash = "www_a";
+                    displaySubmitDiv(false);
+                    break;
+                }
+            }
+            
+            /**
+             * Show or hide a div based on whether a checkbox is checked.
+             * groupName is the id used for that group (without the _option or _div suffix)
+             */
+            function handleCheckbox(groupName)
+            {
+                var container = document.getElementById(groupName + "_container");
+                if (container) {container.style.background="transparent";}
+                
+                if ( document.getElementById(groupName + "_option").checked )
+                {
+                    //Checked, so display the div!
+                    document.getElementById(groupName + "_div").style.display = "block";
+                    location.hash = groupName + "_a";
+                }
+                else
+                {
+                    // Not checked, hide the div.
+                    document.getElementById(groupName + "_div").style.display = "none";
+                }
+            }
+            
+            /**
+             * Show or hide a div based on whether a checkbox is checked.
+             * groupName is the id used for that group (without the _option or _div suffix)
+             * choice is the box that was checked/unchecked
+             */
+            function handleCheckboxList(groupName, choice)
+            {
+                var container = document.getElementById(groupName + "_container");
+                if (container) {container.style.background="transparent";}
+                
+                if ( document.getElementById(groupName + "_" + choice + "_option").checked )
+                {
+                    //Checked, so display the div!
+                    document.getElementById(groupName + "_" + choice + "_div").style.display = "block";
+                    location.hash = groupName + "_" + choice + "_a";
+                }
+                else
+                {
+                    // Not checked, hide the div.
+                    document.getElementById(groupName + "_" + choice + "_div").style.display = "none";
+                }
+            }
+            
+            /**
+             * Show or hide a div based on whether a radio button 'yes' or 'no' is selected.
+             * groupName is the id used for that group (without the _option or _div suffix)
+             */
+            function handleRadioBool(groupName)
+            {
+                var container = document.getElementById(groupName + "_container");
+                if (container) {container.style.background="transparent";}
+                
+                if ( document.getElementById(groupName + "_option_yes").checked )
+                {
+                    //Checked, so display the div!
+                    document.getElementById(groupName + "_div").style.display = "block";
+                    location.hash = groupName + "_a";
+                }
+                else
+                {
+                    // Not checked, hide the div.
+                    document.getElementById(groupName + "_div").style.display = "none";
+                }
+            }
+            
+            /**
+             * Show or hide two divs, so that one is visible when 'yes' is selected, 
+             * and the other is visible when 'no' is selected.
+             * groupName is the id used for that group (without the _option or _div suffix)
+             */
+            function handleRadioBoolBoth(groupName)
+            {
+                var container = document.getElementById(groupName + "_container");
+                if (container) {container.style.background="transparent";}
+                
+                if ( document.getElementById(groupName + "_option_yes").checked )
+                {
+                    // 'Yes' was selected
+                    document.getElementById(groupName + "_div_no").style.display = "none";
+                    document.getElementById(groupName + "_div_yes").style.display = "block";
+                    location.hash = groupName + "_yes_a";
+                }
+                else
+                {
+                    // 'No' was selected.
+                    document.getElementById(groupName + "_div_yes").style.display = "none";
+                    document.getElementById(groupName + "_div_no").style.display = "block";
+                    location.hash = groupName + "_no_a";
+                }
+            }
+            
+            /**
+             * Display or hide the 'submit bug' div.
+             * show = true: show it, false: hide it
+             */
+            function displaySubmitDiv(show)
+            {
+                if (show)
+                {
+                    document.getElementById("submit_div").style.display = "block";
+                    document.getElementById("info_needed_div").style.display = "none";
+                    location.hash = "submit_a";
+                }
+                else
+                {
+                    document.getElementById("submit_div").style.display = "none";
+                    document.getElementById("info_needed_div").style.display = "block";
+                }
+            }
+            
+            /**
+             * Display a help blurb in the sidebar, hiding the others.
+             * topic is the name of the div without the "help_" prefix.
+             */
+            function displayHelp(topic)
+            {
+                var container = document.getElementById("sidebar");
+                
+                // Iterate through the divs within the container
+                var divs = container.getElementsByTagName("div");
+                for (var i=0; i<divs.length; i++)
+                {
+                    if (divs[i].className == "sidebar_content")
+                    {
+                        if (divs[i].id == "help_" + topic)
+                        {
+                            // This is the right div, so show it
+                            divs[i].style.display = "block";
+                        }
+                        else
+                        {
+                            // This div should be hidden
+                            divs[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+            
+            /**
+             * Show or hide a series of divs, so that the only one visible, out of a group,
+             * is the one relevant to the selection.
+             * groupName is the id used for that group (without the _option or _div suffix)
+             * choice is the wanted div's id suffix
+             */
+            function showDivFromGroup(groupName, choice)
+            {
+                var container = document.getElementById(groupName + "_container");
+                container.style.background="transparent";
+                
+                // Iterate through the children of the container
+                var children = container.childNodes;
+                for (var i=0; i<children.length; i++)
+                {
+                    // We only want DIVs
+                    if (children[i].tagName == "DIV")
+                    {
+                        if (children[i].id == groupName + "_" + choice + "_div")
+                        {
+                            // This is the right div, so show it
+                            children[i].style.display = "block";
+                        }
+                        else
+                        {
+                            // This div should be hidden
+                            children[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+            
+            /**
+             * Generate all the actual bug-form fields, from the information
+             * given by the user.
+             */
+            function submitBug()
+            {
+                var form = document.forms["bugform"];
+                
+                // Produce keywords list
+                var keyWords = "";
+                if (document.getElementById("linux_backtrace").value != "")
+                {
+                    keyWords += "have-backtrace";
+                }
+                form["keywords"].value = keyWords;
+                
+                // Generate a comment for the bug
+                form["comment"].value = "Comment from form";
+                
+                // Submit the form!
+                //form.submit();
+            }
+            
+          /* ]]> */
+        </script>
+    </head>
+
+    <body>
+        <h1>File a Bug</h1>
+    <div id="main_body">
+        <noscript>
+            <div class="noscript">
+                You do not appear to have Javascript enabled!
+                You need to enable it for this form to work.
+                For help on how to enable Javascript, <a href="http://www.google.com/support/bin/answer.py?answer=23852" target="_blank">see here.</a>
+            </div>
+        </noscript>
+        
+        <p>
+            <strong>If you are having more than one problem, please search for and file each
+            one seperately. That way, each problem can be dealt with sooner.</strong>
+        <p>
+        
+        <p>
+            If you are unsure of anything, try asking for help in the
+            <a href="http://webchat.freenode.net/?channels=libreoffice" target="_blank">LibreOffice chatroom.</a>
+            Just enter a nickname, type what you see in the captcha, and click 'Connect'.
+            <em>
+                This sort of chatroom is known as 'IRC' - for some help on using it,
+                <a href="http://irchelp.org/irchelp/new2irc.html" target="_blank">see here.</a>
+            </em>
+        </p>
+        
+        <h2>Search for Similar Bugs</h2>
+        <p>
+            If possible, please search the bug reports before you file a new bug.
+            Someone else may have already found your bug - if you can add extra
+            information to that report, it is more helpful to the developers than
+            opening-up a duplicate bug.
+        </p>
+        <p>
+            Just enter some key words reated to your problem into the box below and
+            click 'Search'. Then see if any of the bugs listed look like yours.
+            <form action="https://bugs.freedesktop.org/buglist.cgi" method="GET" target="_blank">
+                <input type="hidden" name="query_format" value="specific"/>
+                <input type="hidden" name="order" value="relevance desc"/>
+                <input type="hidden" name="bug_status" value="__open__"/>
+                <input type="hidden" name="product" value="LibreOffice"/>
+                <label for="bugsearch_input">Search for bugs:</label>
+                <input type="text" name="content" id="bugsearch_input"/>
+                <input type="submit" value="Search"/>
+            </form>
+        </p>
+        
+        <hr/>
+        
+        <h2>File a New Bug</h2>
+        
+        <div>
+            <h3>What kind of problem are you having?</h3>
+            <ul>
+                <li>
+                    <input type="radio" name="problemtype" id="problemtype_crash" value="0"
+                            onClick="javascript:problemType(0)"/>
+                    <label for="problemtype_crash">LibreOffice crashes. (It quits or stops working
+                        without you telling it to, maybe with an error message)</label>
+                </li>
+                <li>
+                    <input type="radio" name="problemtype" id="problemtype_docload" value="1"
+                            onClick="javascript:problemType(1)"/>
+                    <label for="problemtype_docload">My document looks wrong when I load it.</label>
+                </li>
+                <li>
+                    <input type="radio" name="problemtype" id="problemtype_unreadable" value="2" 
+                            onClick="javascript:problemType(2)"/>
+                    <label for="problemtype_unreadable">Other people cannot read my document.</label>
+                </li>
+                <li>
+                    <input type="radio" name="problemtype" id="problemtype_ui" value="3"
+                            onClick="javascript:problemType(3)"/>
+                    <label for="problemtype_ui">LibreOffice is hard to use.</label>
+                </li>
+                <li>
+                    <input type="radio" name="problemtype" id="problemtype_www" value="4"
+                            onClick="javascript:problemType(4)"/>
+                    <label for="problemtype_www">There is a problem with the website.</label>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="crash" class="hide">
+            <a name="crash_a"></a>
+            
+            <!-- Crashes under what circumstances? -->
+            
+            <div class="question" id="crash_when_container">
+                <h3>When does LibreOffice crash?</h3>
+                <ul>
+                    <li>
+                        <input type="radio" name="crash_when_option" id="crash_when_onload" 
+                                value="onload" onClick="javascript:showDivFromGroup('crash_when', 'onload')"/>
+                        <label for="crash_when_onload">When I load or save a certain document.</label>
+                    </li>
+                    
+                    <li>
+                        <input type="radio" name="crash_when_option" id="crash_when_steps" 
+                                value="steps" onClick="javascript:showDivFromGroup('crash_when', 'steps')"/>
+                        <label for="crash_when_steps">When I perform a series of steps.</label>
+                    </li>
+                    
+                    <li>
+                        <input type="radio" name="crash_when_option" id="crash_when_random" 
+                                value="random" onClick="javascript:showDivFromGroup('crash_when', 'random')"/>
+                        <label for="crash_when_random">It seems to happen randomly.</label>
+                    </li>
+                </ul>
+                
+                <div id="crash_when_onload_div" class="hide">
+                    <p>Please make the document file as small as possible, then attach it.
+                        <a href="javascript:displayHelp('binary_chop')">Show help</a>
+                        <!--For help on this, see <a href="http://wiki.documentfoundation.org/User:AtkinsSJ/BugFiling" target="_blank">here</a>.--></p>
+                    <p><em>Placeholder: Form input for document upload</em></p>
+                </div>
+                
+                <div id="crash_when_steps_div" class="hide">
+                    <p class="question" id="crash_when_steps_document_container">
+                        Do you need to load a document to execute those steps?
+                        <input type="radio" name="crash_when_steps_document_option" id="crash_when_steps_document_option_yes" onClick="javascript:handleRadioBool('crash_when_steps_document')"/>
+                        <label for="crash_when_steps_document_option_yes">Yes</label>
+                        <input type="radio" name="crash_when_steps_document_option" id="crash_when_steps_document_option_no" onClick="javascript:handleRadioBool('crash_when_steps_document')"/>
+                        <label for="crash_when_steps_document_option_no">No</label>
+                    </p>
+                    
+                    <div id="crash_when_steps_document_div" class="hide">
+                        <p><em>Placeholder: If all documents, or one in particular? 
+                            If one, make smaller and attach.</em></p>
+                    </div>
+                    <p>
+                        Please describe the steps that cause the crash, in detail, below:
+                    </p>
+                    <textarea name="crash_steps"> </textarea>
+                </div>
+                
+                <div id="crash_when_random_div" class="hide">
+                    <p><em>Placeholder: Hard to fix bugs without more information.
+                        Please try to narrow it down.</em></p>
+                </div>
+            </div>
+            
+            <!-- Crashes on which OSes? -->
+            
+            <div class="question" id="crash_os_container">
+                <h3>Which operating system have you found the crash on?</h3>
+                <ul>
+                    <li>
+                        <input type="checkbox" id="crash_os_windows_option" onClick="javascript:handleCheckboxList('crash_os', 'windows')"/>
+                        <label for="crash_os_windows_option">Microsoft Windows</label>
+                        <p id="crash_os_windows_div" class="hide">
+                            <a name="crash_os_windows_a"></a>
+                            <em>Placeholder: If an error message pops-up, please take a screenshot
+                                of it and attach it.
+                                <input type="file" name="screenshots[]"/></em>
+                        </p>
+                    </li>
+                    
+                    <li>
+                        <input type="checkbox" id="crash_os_linux_option" onClick="javascript:handleCheckboxList('crash_os', 'linux')"/>
+                        <label for="crash_os_linux_option">Linux</label>
+                        <p id="crash_os_linux_div" class="hide">
+                            <a name="crash_os_linux_a"></a>
+                            Please follow
+                            <a href="javascript:displayHelp('linux_backtrace')">these instructions</a>
+                            to get a backtrace for your crash and then attach it below: <br/>
+                            <input type="file" name="linux_backtrace" id="linux_backtrace"/>
+                        </p>
+                    </li>
+                    
+                    <li>
+                        <input type="checkbox" id="crash_os_mac_option" onClick="javascript:handleCheckboxList('crash_os', 'mac')"/>
+                        <label for="crash_os_mac_option">Apple Mac OS X</label>
+                        <p id="crash_os_mac_div" class="hide">
+                            <a name="crash_os_mac_a"></a>
+                            <em>Placeholder: Instructions for Apple Mac OS X</em>
+                        </p>
+                    </li>
+                    
+                    <li>
+                        <input type="checkbox" id="crash_os_other_option" onClick="javascript:handleCheckboxList('crash_os', 'other')"/>
+                        <label for="crash_os_other_option">Another Operating System</label>
+                        <p id="crash_os_other_div" class="hide">
+                            <a name="crash_os_other_a"></a>
+                            If the bug happened on a different operating system to the ones listed
+                            above, please enter its name in the text box below: <br/>
+                            <input name="crash_os_name" id="crash_os_name" type="text" />
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="docload" class="hide">
+            <a name="docload_a"></a>
+            <p class="question" id="docload_fonts_container">
+                Are you sure you have the fonts installed?
+                <input type="radio" name="docload_fonts_option" id="docload_fonts_option_yes" onClick="javascript:handleRadioBoolBoth('docload_fonts');displaySubmitDiv(true)"/>
+                <label for="docload_fonts_option_yes">Yes</label>
+                <input type="radio" name="docload_fonts_option" id="docload_fonts_option_no" onClick="javascript:handleRadioBoolBoth('docload_fonts')"/>
+                <label for="docload_fonts_option_no">No</label>
+                <br/>
+                For help on this, <a href="javascript:displayHelp('fonts_installed')">see here.</a>
+                <em>Bear in mind that the 'font' drop-down in LibreOffice may list fonts that
+                    are not installed.</em>
+            </p>
+            
+            <div id="docload_fonts_div_yes" class="hide">
+                <p><em>Placeholder:</em> Please take screenshots of the document before and after
+                    the problem and attach them below:
+                    <dl>
+                        <dt><label for="screenshot_before">'Before' screenshot:</label></dt>
+                        <dd><input type="file" name="screenshot_before" id="screenshot_before"/></dd>
+                        <dt><label for="screenshot_after">'After' screenshot:</label></dt>
+                        <dd><input type="file" name="screenshot_after" id="screenshot_after"/></dd>
+                    </dl>
+                </p>
+                <p>Please make the document file as small as possible, then attach it.
+                    <a href="javascript:displayHelp('binary_chop')">Show help</a>
+                </p>
+            </div>
+            
+            <div id="docload_fonts_div_no" class="hide">
+                <p><em>Placeholder: Blurb about installing fonts / using a different font /
+                    why certain fonts might be unavailable.</em></p>
+            </div>
+        </div>
+        
+        <div id="unreadable" class="hide">
+            <a name="unreadable_a"></a>
+            <p class="question" id="unreadable_original_container">
+                Do you have the original document in OpenDocument format?
+                <input type="radio" name="unreadable_original_option" id="unreadable_original_option_yes" onClick="javascript:handleRadioBoolBoth('unreadable_original')"/>
+                <label for="unreadable_original_option_yes">Yes</label>
+                <input type="radio" name="unreadable_original_option" id="unreadable_original_option_no" onClick="javascript:handleRadioBoolBoth('unreadable_original')"/>
+                <label for="unreadable_original_option_no">No</label>
+            </p>
+            
+            <div id="unreadable_original_div_yes" class="hide">
+                <p>
+                    Please make the document file as small as possible, then attach it.
+                    For help on this, see <a href="http://wiki.documentfoundation.org/User:AtkinsSJ/BugFiling" target="_blank">here</a>.
+                </p>
+            </div>
+            
+            <div id="unreadable_original_div_no" class="hide">
+                <p><em>Blurb about recreating document</em></p>
+            </div>
+        </div>
+        
+        <div id="ui" class="hide">
+            <a name="ui_a"></a>
+            <p><em>Placeholder: Set of questions for when the UI is hard to use.
+                I have no idea where to go from here!</em></p>
+        </div>
+        
+        <div id="www" class="hide">
+            <a name="www_a"></a>
+            <p><em>Placeholder: Website bugs and problems. Not sure where to
+                go with this one.</em></p>
+        </div>
+        
+        <div id="info_needed_div" class="hide">
+            <p>Further information is needed before the bug can be filed.
+                Please check that you have answered all the above questions.</p>
+            <p>Unanswered questions are highlighted in yellow.</p>
+        </div>
+        
+        <div id="submit_div" class="hide">
+            <hr/>
+            <a name="submit_a"></a>
+                <dl>
+                    <dt>Is there any other information you can give about your problem?</dt>
+                    <dd><textarea></textarea></dd>
+                </dl>
+            <form name="bugform" action="https://bugs.freedesktop.org/enter_bug.cgi" method="GET">
+                <input type="hidden" name="product" value="LibreOffice"/>
+                <input type="text" name="comment" value="Test comment"/>
+                <input type="text" name="keywords" value="keyword another yetanother"/>
+            </form>
+            <button onClick="javascript:submitBug()">Continue</button>
+        </div>
+    </div>
+    
+<!-- Sidebar: Blurbs for various help topics. -->
+    
+    <div id="sidebar">
+        <div class="sidebar_content" id="help_binary_chop">
+            <h3>Make the file as small as possible</h3> 
+            <p>
+                In order to be most helpful, please make documents as small as possible,
+                while still causing the bug. The simplest way of doing this is known as
+                <em>binary chopping</em>.
+            </p> 
+            <ol>
+                <li>First, save a backup copy of the document.</li>
+                <li>Open the document up in its native application (usually this is thw
+                    application the document was created in):
+                    <ul>
+                        <li>For .doc files, this will be Microsoft Word.</li>
+                        <li> For ODF files (those ending in .od*, where * is a letter) this
+                            will be LibreOffice.</li>
+                    </ul> 
+                </li>
+                <li>Then, repeatedly:
+                    <ol>
+                        <li>Delete the top half of the document.</li>
+                        <li>Save it as a new document.</li>
+                        <li>Open the document in LibreOffice.</li>
+                        <li>Is the problem still there?
+                            <ul>
+                                <li>If so, go back to the start of step 3.</li>
+                                <li>Otherwise, go back to the previous copy (or backup) and
+                                    try step 3 again with the second half of the document.</li>
+                            </ul> 
+                        </li>
+                    </ol> 
+                </li>
+                <li>
+                    Once you have reduced the document down to the part that causes problems,
+                    (making sure to remove any personal or confidential information), attach
+                    it to the bug report.
+                </li>
+            </ol> 
+        </div>
+        
+        <div class="sidebar_content" id="help_linux_backtrace">
+            <h3>How to get backtrace (on Linux)</h3> 
+            <p>
+                The backtrace is useful when the application crashes or freezes.
+                You might use the following steps:    
+            </p> 
+            <ol>
+                <li>Install the <tt>libreoffice*-debuginfo</tt> packages, if available.
+                    If you do not have them, the backtrace is less useful, but still could
+                    potentially provide at least some information.</li>
+                <li>Start the debugger with the real binary and log the output:
+                    <pre>cd /opt/libreoffice/program</pre>
+                    <pre>gdb ./soffice.bin 2&gt;&amp;1 | tee /tmp/gdb.log</pre> </li>
+                <li>Inside the debugger, start the application:
+                    <pre>run</pre>
+                    Should you need to specify options to the LibreOffice command line,
+                    use<code>run &lt;options&gt;</code>, like eg. <code>run -writer</code>,
+                    or <code>run /path/to/document.odt</code></li>
+                <li>
+                    Do the steps to reproduce the application crash or freeze.
+                    If the freeze is the case, you need to press <tt>CTRL-C</tt>
+                    in gdb to get the gdb commandline back.
+                </li>
+                <li>Produce the backtrace:
+                    <pre>backtrace</pre></li>
+                <li>Produce backtrace of all threads:
+                    <pre>thread apply all bt</pre></li>
+                <li>Quit the debugger
+                    <pre>quit</pre></li>
+                <li>Attach the whole <tt>gdb.log</tt> to the bug report.</li>
+            </ol> 
+        </div>
+        
+        <div class="sidebar_content" id="help_fonts_installed">
+            <div id="help_fonts_installed_container">
+                <h3>Checking which fonts are installed</h3>
+                <p>Click on the name of the Operating System that your document looked strange on:</p>
+                <ul>
+                    <li>
+                        <a href="javascript:showDivFromGroup('help_fonts_installed', 'linux')">Linux</a>
+                    </li>
+                    <li>
+                        <a href="javascript:showDivFromGroup('help_fonts_installed', 'macOSX')">Apple Mac OSX</a>
+                    </li>
+                    <li>
+                        <a href="javascript:showDivFromGroup('help_fonts_installed', 'winXP')">Microsoft Windows XP</a>
+                    </li>
+                    <li>
+                        <a href="javascript:showDivFromGroup('help_fonts_installed', 'win7')">Microsoft Windows 7</a>
+                    </li>
+                </ul>
+                
+                <div class="hide" id="help_fonts_installed_winXP_div">
+                    <h4>Microsoft Windows XP</h4>
+                    <ol>
+                        <li>
+                            Open-up Control Panel. (Click on the start button, then 'Control Panel'
+                            is one of the options on the right.)
+                        </li>
+                        <li>
+                            Find the icon named 'Fonts' and double-click on it.
+                        </li>
+                        <li>
+                            You will be presented with a list of all the fonts that are installed.
+                            Scroll through them to see if the font you are looking for is there.
+                            If it is, then that font is installed.
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="hide" id="help_fonts_installed_win7_div">
+                    <h4>Microsoft Windows 7</h4>
+                    <ol>
+                        <li>
+                            Open-up Control Panel. (Click on the start button, then 'Control Panel'
+                            is one of the options on the right.)
+                        </li>
+                        <li>
+                            Enter 'fonts' into the search box in the top-right of the Control Panel
+                            window, and press Enter.
+                        </li>
+                        <li>
+                            Under 'Fonts', there should be a link that says 'View installed fonts'.
+                            Click on it.
+                        </li>
+                        <li>
+                            You will be presented with a list of all the fonts that are installed.
+                            Scroll through them to see if the font you are looking for is there.
+                            If it is, then that font is installed.
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="hide" id="help_fonts_installed_linux_div">
+                    <h4>Linux</h4>
+                    <ol>
+                        <li>Open a terminal window.</li>
+                        <li>Type-in
+                            <pre>fc-list | cut -d ':' -f 1 | sort -u</pre>
+                            and press Enter.</li>
+                        <li>A list of the installed fonts will appear, in alphabetical order.</li>
+                    </ol>
+                </div>
+                
+                <div class="hide" id="help_fonts_installed_macOSX_div">
+                    <h4>Apple Mac OSX</h4>
+                    <ol>
+                        <li>Open 'Finder'.</li>
+                        <li>Navigate to the 'Applications' folder.</li>
+                        <li>Scroll down to 'Font Book', and double-click on it.</li>
+                        <li>You will be presented with a list of all the fonts that are
+                            installed, in alphabetical order.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
