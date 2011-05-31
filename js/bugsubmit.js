@@ -22,20 +22,38 @@
  */
 
 // Global variable holding the ID of the currently visible slide
-var currentSlide = "slide_introduction";
+var currentSlide = 'slide_introduction';
 
 /**
  * Disable prev/next buttons on the slide with the given id
  */
 function disableButtonsOnSlide(id) {
-	$("div#" + id).find('div.buttons button').attr('disabled', 'disabled');
+	$('div#' + id).find('div.buttons button').attr('disabled', 'disabled');
 }
 
 /**
  * Enable prev/next buttons on the slide with the given id
  */
 function enableButtonsOnSlide(id) {
-	$("div#" + id).find('div.buttons button').attr('disabled', false);
+	$('div#' + id).find('div.buttons button').attr('disabled', false);
+}
+
+/**
+ * 'Reset' a slide, removing any user-entered information.
+ * This would be called when going back a step, so that no old,
+ * hidden data is kept and submitted.
+ */
+function resetSlide(id) {
+	var slide = $('div#' + id);
+	// Uncheck boxes
+	slide.find('input[type=checkbox]').attr('checked', false);
+	// Unselect radio buttons
+	slide.find('input[type=radio]').attr('checked', false);
+	// Clear text boxes and textareas
+	slide.find('input[type=text], textarea').attr('value', '');
+	
+	// Hide all divs that were originally hidden
+	slide.find('div.hide').slideUp();
 }
 
 /**
@@ -43,8 +61,8 @@ function enableButtonsOnSlide(id) {
  */
 function scrollToId(id) {
 	disableButtonsOnSlide(currentSlide);
-	$("div#" + id).removeClass('hide');
-	$("div#slides").scrollTo("div#" + id, {speed:1000, easing:"swing"});
+	$('div#' + id).removeClass('hide');
+	$('div#slides').scrollTo('div#' + id, {speed:1000, easing:'swing'});
 	currentSlide = id;
 	enableButtonsOnSlide(currentSlide);
 }
@@ -54,8 +72,9 @@ function scrollToId(id) {
  */
 function scrollBack(id) {
 	disableButtonsOnSlide(currentSlide);
-	$("div#slides").scrollTo("-=780px", {speed:1000, easing:"swing", onAfter: function(){
-		$("div#" + currentSlide).addClass('hide');
+	$('div#slides').scrollTo('-=780px', {speed:1000, easing:'swing', onAfter: function(){
+		resetSlide(currentSlide);
+		$('div#' + currentSlide).addClass('hide');
 		currentSlide = id;
 		enableButtonsOnSlide(currentSlide);
 	}});
@@ -69,13 +88,13 @@ function scrollToIdIfRadioSelected(id, inputName) {
 	var selected = $('input[name="' + inputName + '"]:checked');
 	if (selected.length >= 1) {
 		disableButtonsOnSlide(currentSlide);
-		$("div#" + currentSlide + "_novalue").addClass('hide');
-		$("div#" + id).removeClass('hide');
-		$("div#slides").scrollTo("div#" + id, {speed:1000, easing:"swing"});
+		$('div#' + currentSlide + '_novalue').addClass('hide');
+		$('div#' + id).removeClass('hide');
+		$('div#slides').scrollTo('div#' + id, {speed:1000, easing:'swing'});
 		currentSlide = id;
 		enableButtonsOnSlide(currentSlide);
 	} else {
-		$("div#" + currentSlide + "_novalue").removeClass('hide');
+		$('div#' + currentSlide + '_novalue').removeClass('hide');
 	}
 }
 
@@ -87,13 +106,13 @@ function scrollToIdFromValue(idBase, inputName) {
 	if (selected.length == 1) {
 		disableButtonsOnSlide(currentSlide);
 		var id = idBase + '_' + $('input[name="' + inputName + '"]:checked').val();
-		$("div#" + id).removeClass('hide');
-		$("div#slides").scrollTo("div#" + id, {speed:1000, easing:"swing"});
-		$("div#" + idBase + "_novalue").addClass('hide');
+		$('div#' + id).removeClass('hide');
+		$('div#slides').scrollTo('div#' + id, {speed:1000, easing:'swing'});
+		$('div#' + idBase + '_novalue').addClass('hide');
 		currentSlide = id;
 		enableButtonsOnSlide(currentSlide);
 	} else {
-		$("div#" + idBase + "_novalue").removeClass('hide');
+		$('div#' + idBase + '_novalue').removeClass('hide');
 	}
 }
 
@@ -105,27 +124,30 @@ function scrollToIdFromValue(idBase, inputName) {
  */
 function showDivFromGroup(groupName, choice) {
     // Iterate through the children of the container
-    var children = $("div#"+groupName+"_container div");
+    var children = $('div#'+groupName+'_container div');
     $.each(children, function(index,value) {
-		if (value.id == groupName + "_" + choice + "_div") {
-			$(this).slideDown("slow");
+		if (value.id == groupName + '_' + choice + '_div') {
+			$(this).slideDown('slow');
 		} else {
-			$(this).slideUp("slow");
+			$(this).slideUp('slow');
 		}
 	});
 }
 
 /**
  * Display a help blurb in the sidebar, hiding the others.
- * topic is the name of the div without the "help_" prefix.
+ * topic is the name of the div without the 'help_' prefix.
  */
 function showHelp(topic) {
-	$("div#help_"+topic).css({width:0}).prependTo("div#"+currentSlide).animate({width: "45%"});
+	$('div#help_'+topic).css({width:0}).prependTo('div#'+currentSlide).animate({width: '45%'});
 }
 
+/**
+ * Hide whatever help text is currently visible.
+ */
 function hideHelp() {
-	$("div.help_content").animate({width: 0}, function() {
-		$(this).appendTo("div#help");
+	$('div.help_content').animate({width: 0}, function() {
+		$(this).appendTo('div#help');
 	});
 }
 
@@ -134,8 +156,8 @@ function hideHelp() {
  */
 function showFromCheckbox(checkbox, id) {
 	if (checkbox.checked) {
-		$("#"+id).slideDown("slow");
+		$('#'+id).slideDown('slow');
 	} else {
-		$("#"+id).slideUp("slow");
+		$('#'+id).slideUp('slow');
 	}
 }

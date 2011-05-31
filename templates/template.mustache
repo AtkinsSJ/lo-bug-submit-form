@@ -13,6 +13,7 @@
 			<a style="float: right;" href="http://webchat.freenode.net/?channels=libreoffice" target="_blank">
 				LibreOffice chatroom
 			</a>
+			<button onclick="resetSlide(currentSlide);">Reset slide</button>
 		</div>
 		
 		<div id="slides"> 
@@ -214,7 +215,7 @@
 							<p id="crash_os_linux_div" class="hide">
 								<a name="crash_os_linux_a"></a>
 								Please follow
-								<a href="javascript:displayHelp('linux_backtrace')">these instructions</a>
+								<a href="javascript:showHelp('linux_backtrace')">these instructions</a>
 								to get a backtrace for your crash and then attach it below: <br/>
 								<input type="file" name="linux_backtrace" id="linux_backtrace"/>
 							</p>
