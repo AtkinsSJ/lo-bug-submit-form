@@ -60,19 +60,19 @@ class BugSubmitPage extends Mustache
 						<p>
 							Just enter some key words reated to your problem into the box below and
 							click \'Search\'. Then see if any of the bugs listed look like yours.
-							<form action="https://bugs.freedesktop.org/buglist.cgi" method="GET" target="search_frame"
-								onsubmit="javascript: return checkSearchForm(this);">
-								<span id="search_alert" class="alert" style="float:right;">
-									Please enter something to search for!</span>
-								<input type="hidden" name="query_format" value="specific"/>
-								<input type="hidden" name="order" value="relevance desc"/>
-								<input type="hidden" name="bug_status" value="__open__"/>
-								<input type="hidden" name="product" value="LibreOffice"/>
-								<label for="bugsearch_input">Search for bugs:</label>
-								<input type="text" name="content" id="bugsearch_input"/>
-								<input type="submit" value="Search"/>
-							</form>
 						</p>
+						<form action="https://bugs.freedesktop.org/buglist.cgi" method="get" target="search_frame"
+							onsubmit="javascript: return checkSearchForm(this);">
+							<span id="search_alert" class="alert" style="float:right;">
+								Please enter something to search for!</span>
+							<input type="hidden" name="query_format" value="specific"/>
+							<input type="hidden" name="order" value="relevance desc"/>
+							<input type="hidden" name="bug_status" value="__open__"/>
+							<input type="hidden" name="product" value="LibreOffice"/>
+							<label for="bugsearch_input">Search for bugs:</label>
+							<input type="text" name="content" id="bugsearch_input"/>
+							<input type="submit" value="Search"/>
+						</form>
 						<p style="text-align: center;">
 							<img id="search_loading_image" src="images/ajax-loader.gif" alt="Loading bugs..." style="display: none;"/>
 						</p>
@@ -136,19 +136,19 @@ class BugSubmitPage extends Mustache
 					<ul>
 						<li>
 							<input type="radio" name="crash_when_option" id="crash_when_onload" value="onload"
-								onClick="javascript:showDivFromGroup(\'crash_when\', \'onload\'); hideHelp()"/>
+								onclick="javascript:showDivFromGroup(\'crash_when\', \'onload\'); hideHelp()"/>
 							<label for="crash_when_onload">When I load or save a certain document.</label>
 						</li>
 						
 						<li>
 							<input type="radio" name="crash_when_option" id="crash_when_steps" value="steps"
-								onClick="javascript:showDivFromGroup(\'crash_when\', \'steps\'); hideHelp()"/>
+								onclick="javascript:showDivFromGroup(\'crash_when\', \'steps\'); hideHelp()"/>
 							<label for="crash_when_steps">When I perform a series of steps.</label>
 						</li>
 						
 						<li>
 							<input type="radio" name="crash_when_option" id="crash_when_random" value="random"
-								onClick="javascript:showDivFromGroup(\'crash_when\', \'random\'); hideHelp()"/>
+								onclick="javascript:showDivFromGroup(\'crash_when\', \'random\'); hideHelp()"/>
 							<label for="crash_when_random">It seems to happen randomly.</label>
 						</li>
 					</ul>
@@ -177,7 +177,7 @@ class BugSubmitPage extends Mustache
 							<p>
 								Please describe the steps that cause the crash, in detail, below:
 							</p>
-							<textarea name="crash_steps" style="width: 100%; height:180px;"> </textarea>
+							<textarea name="crash_steps" rows="5" cols="80" style="width: 100%; height:180px;"> </textarea>
 						</div>
 						
 						<div id="crash_when_random_div" class="hide">
@@ -202,7 +202,7 @@ class BugSubmitPage extends Mustache
 				'content' => '<p>Please tick all that apply.</p>
 					<ul>
 						<li>
-							<input type="checkbox" name="crash_os_option" id="crash_os_windows_option" onClick="javascript:showFromCheckbox(this, \'crash_os_windows_div\')"/>
+							<input type="checkbox" name="crash_os_option" id="crash_os_windows_option" onclick="javascript:showFromCheckbox(this, \'crash_os_windows_div\')"/>
 							<label for="crash_os_windows_option">Microsoft Windows</label>
 							<p id="crash_os_windows_div" class="hide">
 								<a name="crash_os_windows_a"></a>
@@ -213,7 +213,7 @@ class BugSubmitPage extends Mustache
 						</li>
 						
 						<li>
-							<input type="checkbox" name="crash_os_option" id="crash_os_linux_option" onClick="javascript:showFromCheckbox(this, \'crash_os_linux_div\')"/>
+							<input type="checkbox" name="crash_os_option" id="crash_os_linux_option" onclick="javascript:showFromCheckbox(this, \'crash_os_linux_div\')"/>
 							<label for="crash_os_linux_option">Linux</label>
 							<p id="crash_os_linux_div" class="hide">
 								<a name="crash_os_linux_a"></a>
@@ -225,7 +225,7 @@ class BugSubmitPage extends Mustache
 						</li>
 						
 						<li>
-							<input type="checkbox" name="crash_os_option" id="crash_os_mac_option" onClick="javascript:showFromCheckbox(this, \'crash_os_mac_div\')"/>
+							<input type="checkbox" name="crash_os_option" id="crash_os_mac_option" onclick="javascript:showFromCheckbox(this, \'crash_os_mac_div\')"/>
 							<label for="crash_os_mac_option">Apple Mac OS X</label>
 							<p id="crash_os_mac_div" class="hide">
 								<a name="crash_os_mac_a"></a>
@@ -234,7 +234,7 @@ class BugSubmitPage extends Mustache
 						</li>
 						
 						<li>
-							<input type="checkbox" name="crash_os_option" id="crash_os_other_option" onClick="javascript:showFromCheckbox(this, \'crash_os_other_div\')"/>
+							<input type="checkbox" name="crash_os_option" id="crash_os_other_option" onclick="javascript:showFromCheckbox(this, \'crash_os_other_div\')"/>
 							<label for="crash_os_other_option">Another Operating System</label>
 							<p id="crash_os_other_div" class="hide">
 								<a name="crash_os_other_a"></a>
