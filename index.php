@@ -26,9 +26,17 @@ class BugSubmitPage extends Mustache
 							),
 				'content' => '<noscript>
 						<div class="noscript">
-							You do not appear to have Javascript enabled!
-							You need to enable it for this form to work.
-							For help on how to enable Javascript, <a href="http://www.google.com/support/bin/answer.py?answer=23852" target="_blank">see here.</a>
+							<p>
+								You do not appear to have Javascript enabled!
+								You need to enable it for this form to work.
+							</p>
+							<p>
+								For help on how to enable Javascript, <a href="http://www.google.com/support/bin/answer.py?answer=23852" target="_blank">see here.</a>
+							</p>
+							<p>
+								Alternatively, you can use Bugzilla directly by 
+								<a href="https://bugs.freedesktop.org/enter_bug.cgi?product=LibreOffice">clicking here.</a>
+							</p>
 						</div>
 					</noscript>
 					<p>
@@ -121,7 +129,7 @@ class BugSubmitPage extends Mustache
 							<label for="problemtype_www">There is a problem with the website.</label>
 						</li>
 					</ul>
-					<div class="hide" id="slide_problemtype_novalue">
+					<div class="hide alert" id="slide_problemtype_novalue">
 						Please select a choice before continuing!
 					</div>'
 			),
@@ -188,7 +196,7 @@ class BugSubmitPage extends Mustache
 						</div>
 					</div>
 					
-					<div class="hide" id="slide_problemtype_crash_novalue">
+					<div class="hide alert" id="slide_problemtype_crash_novalue">
 						Please select a choice before continuing!
 					</div>'
 			),
@@ -245,7 +253,7 @@ class BugSubmitPage extends Mustache
 						</li>
 					</ul>
 					
-					<div class="hide" id="slide_problemtype_crash_os_novalue">
+					<div class="hide alert" id="slide_problemtype_crash_os_novalue">
 						You must tick at least one operating system before continuing.
 					</div>'
 			),

@@ -58,6 +58,7 @@ function resetSlide(id) {
 	
 	// Hide all divs that were originally hidden
 	slide.find('div.hide').slideUp();
+	//$('div#' + id + '_novalue').addClass('hide');
 }
 
 /**
@@ -103,7 +104,8 @@ function scrollToIdIfRadioSelected(id, inputName) {
 		currentSlide = id;
 		enableButtonsOnSlide(currentSlide);
 	} else {
-		$('div#' + currentSlide + '_novalue').removeClass('hide');
+		// Show the 'pick one!' message
+		$('div#' + currentSlide + '_novalue').fadeIn();
 	}
 }
 
@@ -121,7 +123,8 @@ function scrollToIdFromValue(idBase, inputName) {
 		currentSlide = id;
 		enableButtonsOnSlide(currentSlide);
 	} else {
-		$('div#' + idBase + '_novalue').removeClass('hide');
+		// Show the 'pick one!' message
+		$('div#' + idBase + '_novalue').fadeIn();
 	}
 }
 
