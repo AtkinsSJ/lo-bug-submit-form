@@ -74,12 +74,17 @@ function scrollToId(id) {
 /**
  * Go back to the previous visible slide
  */
-function scrollBack(id) {
+function scrollBack() {
 	disableButtonsOnSlide(currentSlide);
 	$('div#slides').scrollTo('-=780px', {speed:1000, easing:'swing', onAfter: function(){
 		resetSlide(currentSlide);
-		$('div#' + currentSlide).addClass('hide');
-		currentSlide = id;
+		var oldSlide = $('div#' + currentSlide);
+		oldSlide.addClass('hide');
+		
+		// Get the previous slide which isn't hidden
+		var prev = oldSlide.prevAll().not('.hide')[0];
+		currentSlide = prev.id;
+		
 		enableButtonsOnSlide(currentSlide);
 	}});
 }
