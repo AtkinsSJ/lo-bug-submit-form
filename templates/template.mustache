@@ -18,7 +18,7 @@
 		<div id="slides"> 
 			<div class="slide_container"> 
 			{{#slides}}
-				<div class="slide hide" id="slide_{{id}}">
+				<div class="slide {{^first}}hide{{/first}}" id="slide_{{id}}">
 					<h2>{{title}}</h2>
 					{{content}}
 					<div class="buttons">
@@ -58,9 +58,6 @@
 		<script type="text/javascript"> 
           /* <![CDATA[ */
 			$(function() {
-				// Make first slide visible
-				$("div.slide:first-child").css({display:"none"}).removeClass('hide').fadeIn('slow');
-			
 				$("iframe#search_frame").load(function() {
 					//Flip to search results div
 					$("img#search_loading_image").css({display: "none"});

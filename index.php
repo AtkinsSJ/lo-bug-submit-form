@@ -19,6 +19,7 @@ class BugSubmitPage extends Mustache
 	{
 		return array(
 			array(
+				'first' => true,
 				'id' => 'introduction',
 				'title' => 'Introduction',
 				'buttons' => array(
